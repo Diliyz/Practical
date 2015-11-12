@@ -1,20 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
   User: 144315F
-  Date: 10/29/2015
-  Time: 4:19 PM
+  Date: 11/5/2015
+  Time: 5:27 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head><title>Duke's Bookstore</title></head>
-
 <%@ page import="model.*" %>
 <%
-  BookDAO db = new BookDAO();
-  BooksEntity book = db.getBook();
+  BooksEntity book = (BooksEntity)request.getAttribute("book");
 %>
-
 <body bgcolor="#ffffff">
 <center>
   <hr>
@@ -23,10 +20,12 @@
   <br> &nbsp;
   <hr>
 </center>
-<br> <b>What we are reading</b>
-<blockquote><em><a href="bookdetails?bookId=<%= book.getId() %>"><%= book.getTitle() %></a></em> What a cool book.
-</blockquote>
-<p><a href="bookcatalog"><b>Start Shopping</b></a></p>
+<h2><%= book.getTitle() %></h2>&nbsp; by<em> <%= book.getFirstName() + " " + book.getSurname() %> </em> (<%= book.getCalendarYear() %>)<br> <br>
+<h4>Here's what the critcs say: </h4>
+<blockquote>What a cool book.</blockquote>
+<h4>Our Price: <%= book.getPrice() %></h4>
+<p><strong><a href="/bookcatalog?bookId=<%= book.getId() %>">Add to Cart</a> <a href="/bookcatalog">Continue Shopping</a></strong></p>
 </body>
 </html>
+
 

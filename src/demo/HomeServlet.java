@@ -17,12 +17,17 @@ public class HomeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        out.println(getContent());
-        out.close();
+        try {
+            PrintWriter out = response.getWriter();
+            out.println(getContent());
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServletException(e);
+        }
     }
 
-    private String getContent() {
+    private String getContent() throws Exception {
         BookDBAO db = new BookDBAO();
         BookDetails bd = db.getBookDetails("203");
         StringBuilder buffer = new StringBuilder();
@@ -30,7 +35,7 @@ public class HomeServlet extends HttpServlet {
         buffer.append("<body  bgcolor=\"#ffffff\">" + "<center>" +
                 "<hr> <br> &nbsp;" + "<h1>" +
                 "<font size=\"+3\" color=\"#CC0066\">Duke's </font> <img src=\"" +
-                "./index.gif\" alt=\"Duke holding books\"\">" +
+                "./duke.books.gif\" alt=\"Duke holding books\"\">" +
                 "<font size=\"+3\" color=\"black\">Bookstore</font>" + "</h1>" +
                 "</center>" + "<br> &nbsp; <hr> <br> ");
 
@@ -46,5 +51,4 @@ public class HomeServlet extends HttpServlet {
 
         return buffer.toString();
     }
-
 }
